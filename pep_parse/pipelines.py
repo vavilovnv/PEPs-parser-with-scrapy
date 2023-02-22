@@ -1,5 +1,5 @@
 import csv
-import os.path
+import os
 from collections import defaultdict
 from datetime import datetime
 from pathlib import Path
@@ -8,7 +8,6 @@ from pathlib import Path
 BASE_DIR = Path(__file__).parent.parent
 
 STATUSES_COUNT = defaultdict(int)
-RESULTS = []
 
 
 class PepParsePipeline:
@@ -25,9 +24,9 @@ class PepParsePipeline:
         pattern = '%m-%d-%Y_%H-%M-%S'
         file_name = f'status_summary_{datetime.now().strftime(pattern)}.csv'
         path = f'{BASE_DIR}/results/'
-        RESULTS.extend(STATUSES_COUNT.items())
-        RESULTS.append(('Total', sum(STATUSES_COUNT.values())))
+        results = list(STATUSES_COUNT.items())
+        results.append(('Total', sum(STATUSES_COUNT.values())))
         with open(os.path.join(path, file_name), 'w', encoding='utf-8') as f:
             writer = csv.writer(f, dialect='unix')
             f.write('Статус, Количество\n')
-            writer.writerows(RESULTS)
+            writer.writerows(results)
