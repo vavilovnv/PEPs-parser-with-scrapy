@@ -32,8 +32,8 @@ class PepSpider(scrapy.Spider):
         lst_header = header.split('–', maxsplit=1)
         if len(lst_header) != 2:
             raise CloseSpider(f'Неверная структура заголовка: {header}')
-        pep_number = lst_header[0].replace('PEP', '').lstrip()
-        pep_name = lst_header[1].replace('PEP', '').lstrip()
+        pep_number = lst_header[0].replace('PEP', '').strip()
+        pep_name = lst_header[1].replace('PEP', '').strip()
         pep_status = response.css('dt:contains("Status") + dd').css(
             'abbr::text'
         ).get()
